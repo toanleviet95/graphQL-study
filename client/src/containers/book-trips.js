@@ -20,14 +20,13 @@ export default function BookTrips({ cartItems }) {
     }
   );
 
-  if (loading) return <p>Booking...</p>;
   if (error) return <p>ERROR: {JSON.stringify(error)}</p>;
 
   return data && data.bookTrips && !data.bookTrips.success
     ? <p data-testid="message">{data.bookTrips.message}</p>
     : (
       <Button onClick={bookTrips} data-testid="book-button">
-        Book All
+        {loading ? 'Please wait...' : 'Book All'}
       </Button>
     );
 }

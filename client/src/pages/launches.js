@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
 import { LaunchTile, Header, Button, Loading } from "../components";
@@ -6,6 +6,7 @@ import { GET_LAUNCHES } from '../gqls/launches'
 
 export default function Launches() {
   const { data, loading, error, fetchMore } = useQuery(GET_LAUNCHES);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   if (loading) return <Loading />;
   if (error) return <p>ERROR</p>;
 
@@ -23,12 +24,14 @@ export default function Launches() {
 
       {data.launches && data.launches.hasMore && (
         <Button
-          onClick={() =>
+          onClick={() => {
+            setIsFetchingMore(true);
             fetchMore({
               variables: {
                 after: data.launches.cursor
               },
               updateQuery: (prev, { fetchMoreResult, ...rest }) => {
+                setIsFetchingMore(false);
                 if (!fetchMoreResult) return prev;
                 return {
                   ...fetchMoreResult,
@@ -43,8 +46,9 @@ export default function Launches() {
               }
             })
           }
+          }
         >
-          Load More
+          {isFetchingMore ? 'Loading...' : 'Load More'}
         </Button>
       )}
     </>

@@ -20,7 +20,6 @@ export default function ActionButton({ isBooked, id, isInCart }) {
     }
   );
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>ERROR: {JSON.stringify(error)}</p>;
 
   return (
@@ -30,7 +29,7 @@ export default function ActionButton({ isBooked, id, isInCart }) {
         isBooked={isBooked}
         data-testid={'action-button'}
       >
-        {isBooked
+        {loading ? 'Please wait...' : isBooked
           ? 'Cancel This Trip'
           : isInCart
           ? 'Remove from Cart'
