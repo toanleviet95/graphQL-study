@@ -1,6 +1,6 @@
 module.exports = {
   client: {
-    name: 'Space Explorer [web]',
-    service: 'space-explorer',
+    name: 'My First Launch',
+    service: 'my-first-launch',
   },
 };

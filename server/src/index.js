@@ -12,6 +12,8 @@ dotenv.config();
 const store = createStore();
 
 const server = new ApolloServer({
+  introspection: true,
+  playground: true,
   context: async ({ req }) => {
     // simple auth check on every request
     const auth = req.headers && req.headers.authorization || '';
@@ -27,7 +29,7 @@ const server = new ApolloServer({
   resolvers,
   engine: {
     apiKey: process.env.ENGINE_API_KEY,
-    schemaTag: "production"
+    schemaTag: "development"
   },
   dataSources: () => ({
     launchAPI: new LaunchAPI(),
